@@ -1,0 +1,36 @@
+include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int32_t a;
+    int n = 10;
+    int iter = 0;
+    cin >> a;
+
+    while (a % n != a) {
+        iter += 1;
+        n *= 10;
+    }
+
+    cout << a;
+    cout << "=";
+    cout << a % n / (n / 10);
+    cout << "*10^";
+    cout << iter;
+    iter -= 1;
+    n /= 10;
+
+    while (iter != -1) {
+        int digit = a % n / (n / 10);
+        if (a > 0) {
+            cout << "+";
+        }
+        cout << digit;
+        cout << "*10^";
+        cout << iter;
+        n /= 10;
+        iter -= 1;
+    }
+}

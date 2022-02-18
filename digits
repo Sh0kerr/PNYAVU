@@ -1,4 +1,4 @@
-include <iostream>
+#include <iostream>
 
 using namespace std;
 
@@ -24,6 +24,11 @@ int main()
 
     while (iter != -1) {
         int digit = a % n / (n / 10);
+        if (digit == 0) {
+            n /= 10;
+            iter -= 1;
+            continue;
+        }
         if (a > 0) {
             cout << "+";
         }

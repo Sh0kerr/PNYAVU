@@ -1,1 +1,49 @@
+#include <iostream>
+#include <string>
 
+using namespace std;
+
+
+int from_n_to_ten(string num, int sys) {
+	int res = 0;
+	for (char symbol_char: num) {
+		int symbol_int = int(symbol_char);
+		if (symbol_int > 57) {
+			symbol_int = int(symbol_int - 'A' + 10);
+		}
+		else {
+			symbol_int = int(symbol_int - '0');
+		}
+		res += symbol_int;
+		res *= sys;
+	}
+	return (res / sys);
+}
+
+
+string from_ten_to_n(int num, int sys) {
+	if (num == sys) {
+		return "10";
+	} else {
+		string res = "";
+		for (int i = 0; num > 0; i++) {
+			if (num % sys > 9) {
+				res = char((num % sys) + 'A' - 10) + res;
+			}
+			else {
+				res = char((num % sys) + '0') + res;
+			}
+			num /= sys;
+		}
+		return res;
+	}
+}
+
+
+void main() {
+	int sys1, sys2; string num;
+	cin >> sys1 >> num >> sys2;
+	int number_in_ten = from_n_to_ten(num, sys1);
+	cout << number_in_ten << endl;
+	cout << from_ten_to_n(number_in_ten, sys2);
+}

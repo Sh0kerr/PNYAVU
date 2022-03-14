@@ -1,0 +1,36 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+
+int divide_checker(int num) {
+	for (int i = 2; i <= floor(sqrt(num)); i++) {
+		if (num % i == 0) {
+			return 0;
+		}
+	}
+	cout << num << " ";
+	return 1;
+}
+
+
+void prime(int n) {
+	cout << 2 << " ";
+	if (n > 1) {
+		int counter = 1;
+		int num = 3;
+		while (counter < n) {
+			counter += divide_checker(num);
+			num += 2;
+		}
+	}
+}
+
+
+int main() {
+	int n;
+	cin >> n;
+	prime(n);
+	return 0;
+}

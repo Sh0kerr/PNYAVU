@@ -1,37 +1,35 @@
 #include <iostream>
 #include <string>
- 
-using namespace std;
- 
- 
-string check(string line) {
-    int n = line.length() - 1;
-    string b = "";
-    for (int i = 0; i < line.length() / 2; i++) {
-            if ((line[i] != '(' and line[n - i] != ')') and (line[i] != '{' and line[n - i] != '}') and (line[i] != '[' and line[n - i] != ']')) {
+#include <stack>
+#include <map>
+
+
+std::string checker(std::string line) {
+    std::stack<char> brackets;
+    std::map<char, char> bracket_check = {
+        {')', '('},
+        {'}', '{'},
+        {']', '['}
+    };
+    for (char symb: line) {
+        if (symb == '(' || symb == '{' || symb == '[') {
+            brackets.push(symb);
+        }
+        else if (symb == ')' || symb == '}' || symb == ']') {
+            if (!brackets.empty() && brackets.top() == bracket_check[symb]) {
+                brackets.pop();
+            }
+            else {
                 return "NO";
             }
-            b = "";
         }
+    }
     return "YES";
 }
- 
- 
-int main(int argc, char *argv[])
-{
-    string line = "";
-    string brackets = "";
-    cin >> line;
-    for (char symbol: line) {
-        if (symbol == '(' or symbol == ')' or symbol == '{' or symbol == '}' or symbol == '[' or symbol == ']') {
-            brackets += symbol;
-        }
-    }
-    if (brackets.length() % 2 != 0) {
-        cout << "NO";
-    }
-    else {
-        cout << check(brackets);
-    }
-    return 0;
+
+
+int main() {
+    std::string line;
+    std::cin >> line;
+    std::cout << checker(line);
 }

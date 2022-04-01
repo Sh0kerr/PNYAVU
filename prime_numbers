@@ -1,26 +1,30 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 
 void prime(int n) {
     std::vector <int> primes;
     int num = 3;
     int counter = 1;
-    int flag = 1;
+    bool flag = true;
+    int sqr;
     while (counter < n) {
+        sqr = ceil(sqrt(num));
         for (int prime: primes) {
+            if (prime > sqr) break;
             if (num % prime == 0) {
-                flag = 1;
+                flag = false;
                 break;
             }
         }
-        if (flag == 0) {
-                primes.push_back(num);
-                counter++;
-                std::cout << num << ' ';
+        if (flag) {
+            primes.push_back(num);
+            counter++;
+            std::cout << num << ' ';
         }
         num += 2;
-        flag = 0;
+        flag = true;
     }
 }
 

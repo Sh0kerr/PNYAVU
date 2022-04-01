@@ -1,0 +1,51 @@
+ #include <iostream>
+
+
+void cocktail(int array[], int len) {
+    int left = 0;
+    int right = len - 1;
+    int helper;
+    while(left < right) {
+        for (int i = left; i < right; i++) {
+            if (array[i] > array[i + 1]) {
+                helper = array[i + 1];
+                array[i + 1] = array[i];
+                array[i] = helper;
+            }
+        }
+        right--;
+        for (int j = right; j > left; j--) {
+            if (array[j] < array[j - 1]) {
+                helper = array[j - 1];
+                array[j - 1] = array[j];
+                array[j] = helper;
+            }
+        }
+        left++;
+    }
+    for (int l = 0; l < len; l++) {
+        std::cout << array[l] << ' ';
+    }
+}
+
+
+int randomNum(int minimum, int maximum) {
+    int num = std::rand() % (maximum - minimum + 1) + minimum;
+    return num;
+}
+
+
+int main() {
+    int len, minimum, maximum;
+    int *mass = new int[len];
+	std::cin >> len >> minimum >> maximum;
+    std::cout << '\n';
+	for (int i = 0; i < len; i++) {
+        int rand = randomNum(minimum, maximum);
+        mass[i] = rand;
+        std::cout << rand << ' ';
+	}
+	std::cout << '\n' << '\n';
+	cocktail(mass, len);
+	return 0;
+}

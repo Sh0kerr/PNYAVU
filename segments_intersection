@@ -1,0 +1,40 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main() {
+
+    struct dot
+    {
+        float x;
+        float y;
+    };
+
+    float x1, x2, x3, x4, y1, y2, y3, y4;
+    cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3 >> x4 >> y4;
+
+    dot dot1; dot dot2; dot dot3; dot dot4;
+    dot1.x = x1, dot1.y = y1;
+    dot2.x = x2, dot2.y = y2;
+    dot3.x = x3, dot3.y = y3;
+    dot4.x = x4, dot4.y = y4;
+
+    float max_x = max(dot1.x, dot2.x);
+    float max_y = max(dot1.y, dot2.y);
+
+    if ((max_x > dot3.x & max_x > dot4.x & max_y > dot3.y & max_y > dot4.y) or (max_x < dot3.x & max_x < dot4.x & max_y < dot3.y & max_y < dot4.y)) {
+        cout << "NO";
+    }
+    else {
+        if ((dot4.x - dot3.x) == 0 || (dot2.x - dot1.x == 0) || (((dot2.y - dot1.y) / (dot2.x - dot1.x)) - ((dot4.y - dot3.y) / (dot4.x - dot3.x))) == 0) {
+            cout << "NO";
+        }
+        else {
+            float x = (((dot4.x * dot3.y - dot3.x * dot4.y) / (dot4.x - dot3.x) - ((dot2.x * dot1.y - dot1.x * dot2.y)) / (dot2.x - dot1.x))) / (((dot2.y - dot1.y) / (dot2.x - dot1.x)) - ((dot4.y - dot3.y) / (dot4.x - dot3.x)));
+            float y = ((dot4.y - dot3.y) / (dot4.x - dot3.x)) * x + ((dot4.x * dot3.y - dot3.x * dot4.y) / (dot4.x - dot3.x));
+            cout << x << " " << y << " ";
+        }
+    }
+
+}

@@ -3,38 +3,29 @@
 
 using namespace std;
 
+struct Dots
+{
+    float x[4];
+    float y[4];
+};
+
 int main() {
 
-    struct dot
-    {
-        float x;
-        float y;
-    };
+    struct Dots dots;
 
-    float x1, x2, x3, x4, y1, y2, y3, y4;
-    cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3 >> x4 >> y4;
+    for(int i = 1; i < 5; i++){
+        cin >> dots.x[i] >> dots.y[i];
+    }
 
-    dot dot1; dot dot2; dot dot3; dot dot4;
-    dot1.x = x1, dot1.y = y1;
-    dot2.x = x2, dot2.y = y2;
-    dot3.x = x3, dot3.y = y3;
-    dot4.x = x4, dot4.y = y4;
-
-    float max_x = max(dot1.x, dot2.x);
-    float max_y = max(dot1.y, dot2.y);
-
-    if ((max_x > dot3.x & max_x > dot4.x & max_y > dot3.y & max_y > dot4.y) or (max_x < dot3.x & max_x < dot4.x & max_y < dot3.y & max_y < dot4.y)) {
-        cout << "NO";
+    if ((dots.x[4] - dots.x[3]) == 0 || (dots.x[2] - dots.x[1] == 0) || (((dots.y[2] - dots.y[1]) / (dots.x[2] - dots.x[1])) - ((dots.y[4] - dots.y[3]) / (dots.x[4] - dots.x[3]))) == 0) {
+        return 0;
     }
     else {
-        if ((dot4.x - dot3.x) == 0 || (dot2.x - dot1.x == 0) || (((dot2.y - dot1.y) / (dot2.x - dot1.x)) - ((dot4.y - dot3.y) / (dot4.x - dot3.x))) == 0) {
-            cout << "NO";
+        float x = (((dots.x[4] * dots.y[3] - dots.x[3] * dots.y[4]) / (dots.x[4] - dots.x[3]) - ((dots.x[2] * dots.y[1] - dots.x[1] * dots.y[2])) / (dots.x[2] - dots.x[1]))) / (((dots.y[2] - dots.y[1]) / (dots.x[2] - dots.x[1])) - ((dots.y[4] - dots.y[3]) / (dots.x[4] - dots.x[3])));
+        float y = ((dots.y[4] - dots.y[3]) / (dots.x[4] - dots.x[3])) * x + ((dots.x[4] * dots.y[3] - dots.x[3] * dots.y[4]) / (dots.x[4] - dots.x[3]));
+        if (x > min(dots.x[1], dots.x[2]) && x < max(dots.x[1], dots.x[2]) && x > min(dots.x[3], dots.x[4]) && x < max(dots.x[3], dots.x[4])) {
+            cout << x << ' ' << y;
         }
-        else {
-            float x = (((dot4.x * dot3.y - dot3.x * dot4.y) / (dot4.x - dot3.x) - ((dot2.x * dot1.y - dot1.x * dot2.y)) / (dot2.x - dot1.x))) / (((dot2.y - dot1.y) / (dot2.x - dot1.x)) - ((dot4.y - dot3.y) / (dot4.x - dot3.x)));
-            float y = ((dot4.y - dot3.y) / (dot4.x - dot3.x)) * x + ((dot4.x * dot3.y - dot3.x * dot4.y) / (dot4.x - dot3.x));
-            cout << x << " " << y << " ";
-        }
+        else return 0;
     }
-
 }

@@ -1,0 +1,140 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+
+
+struct node
+{
+    int val;
+    node* next;
+
+    node(int _val) : val(_val), next(nullptr) {}
+};
+
+
+struct list
+{
+    node* first;
+    node* last;
+    int size = 0;
+
+    list() : first(nullptr), last(nullptr) {}
+
+public:
+
+    bool isempty() {
+        return first == nullptr;
+    }
+
+    void add_elem(int _val) {
+        node* p = new node(_val);
+        addnode(p);
+    }
+
+    void add_rand_elem() {
+        node* p = new node(rand() % 1000);
+        addnode(p);
+    }
+
+    void delete_elem(int index) {
+        deletenode(getbyindex(index));
+    }
+
+    void print() {
+        if (isempty()) return;
+
+        node* p = first;
+        while(p) {
+            cout << p -> val << " ";
+            p = p -> next;
+        }
+        cout << endl;
+    }
+
+private:
+
+    void addnode(node* p) {
+        size++;
+        if (isempty()) {
+            first = p;
+            last = p;
+            return;
+        }
+        last -> next = p;
+        last = p;
+    }
+
+    void deletenode(node* p) {
+        if (!p) return;
+        int index = getindex(p);
+
+        if (index == 0) first = getbyindex(index + 1);
+        else {
+            node* prev = getbyindex(index - 1);
+            prev -> next = p -> next;
+            if (last == p) last = prev;
+        }
+
+        size--;
+        delete p;
+    }
+
+    node* getbyindex(int index) {
+        if (isempty() || index < 0) return nullptr;
+
+        node* p = first;
+        for (int i = 0; i < index; i++) {
+            p = p -> next;
+            if (!p) return nullptr;
+        }
+
+        return p;
+    }
+
+    int getindex(node* p) {
+        node* answer = first;
+
+        for (int i = 0; i < size; i++) {
+            if (answer == p) return i;
+            answer = answer -> next;
+        }
+
+        return 0;
+    }
+
+};
+
+
+void commands() {
+    cout << "0. Выход" << endl;
+    cout << "1. Добавить элемент." << endl;
+    cout << "2. Добавить случайный элемент." << endl;
+    cout << "3. Удалить элемент по индексу." << endl;
+    cout << "4. Вывести список." << endl;
+    cout << endl;
+}
+
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+    srand(time(0));
+    commands();
+    list lst;
+    int cmd = 1, val;
+
+    while (cmd != 0) {
+        cin >> cmd;
+        switch (cmd)
+        {
+            case 0: break;
+            case 1: cin >> val; lst.add_elem(val); break;
+            case 2: lst.add_rand_elem(); break;
+            case 3: cin >> val; lst.delete_elem(val); break;
+            case 4: lst.print(); break;
+            default: cout << "???" << endl; break;
+        }
+
+    }
+
+    return 0;
+}

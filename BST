@@ -1,0 +1,50 @@
+#include <iostream>
+using namespace std;
+
+struct treenode
+{
+    int data;
+    treenode *left, *right;
+};
+
+void show(treenode *&tree) {
+    if (tree != nullptr) {
+        show(tree -> left);
+        cout << tree -> data;
+        show(tree -> right);
+    }
+}
+
+void adder(treenode *&tree, int data) {
+    if (tree == nullptr) {
+        tree = new treenode;
+        tree -> data = data;
+        tree -> left = tree -> right = nullptr;
+    }
+    else{
+        if (data > tree -> data) {
+            if (tree -> right != nullptr) adder(tree -> right, data);
+            else {
+                tree = new treenode;
+                tree -> right -> left = tree -> right -> right = nullptr;
+                tree -> right -> data = data;
+            }
+        }
+        else {
+            if (tree -> left != nullptr) adder(tree -> left, data);
+            else {
+                tree = new treenode;
+                tree -> left -> left = tree -> left -> right = nullptr;
+                tree -> left -> data = data;
+            }
+        }
+    }
+}
+
+int main() {
+    treenode *tree = nullptr;
+
+    for(int i = 5; i > 0; i--) adder(tree, i);
+    show(tree);
+    return 0;
+}
